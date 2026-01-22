@@ -9,7 +9,7 @@ public class Deck {
     public void shuffle(){}
 
     public Card draw(){
-        return null;
+        return new Card();
     }
 
 }
