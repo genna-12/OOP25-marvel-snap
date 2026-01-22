@@ -2,6 +2,7 @@ package com.marvelsnap.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class MenuPanel extends JPanel{
     private JButton btnStart;
@@ -21,5 +22,13 @@ public class MenuPanel extends JPanel{
 
         gbc.gridy = 1;
         add(btnExit, gbc);
+    }
+
+    public void setStartAction(ActionListener action){
+        btnStart.addActionListener(action);
+    }
+
+    public void setExitAction(ActionListener action){
+        btnExit.addActionListener(action);
     }
 }
