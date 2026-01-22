@@ -12,6 +12,6 @@ public class Player {
     public void resetEnergy(int amount){}
 
     public Hand getHand(){
-        return null;
+        return new Hand();
     }
 }
