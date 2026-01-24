@@ -25,6 +25,7 @@ public class Game {
         // logica da implementare
         // devi usare CardFactory per creare i deck (work in progress)
         // LocationFactory per creare le location (stub)
+        // in ogni caso usali
 
         notifyObserver();
     }
@@ -55,5 +56,17 @@ public class Game {
 
     public List<Location> getLocations() {
         return locations;
+    }
+
+    public TurnManager getTurnManager() {
+        return turnManager;
+    }
+
+    public Player getPlayer1() {
+        return players[0];
+    }
+
+    public Player getPlayer2() {
+        return players[1];
     }
 }
