@@ -12,7 +12,7 @@ public class TurnManager {
     }
 
     public int getEnergyForTurn() {
-        return 0;
+        return currentTurn; // mi pare che n energia = n turno quindi ho gia messo return currentTurn ma controlla
     }
 
     public void nextTurn() {
