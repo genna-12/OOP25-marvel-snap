@@ -18,15 +18,34 @@ public class MainController {
 
     private void initListeners() {
         mainFrame.getMenuPanel().setStartAction((ActionEvent e) -> {
-            mainFrame.showScreen("Setup");
+            mainFrame.showScreen("SETUP");
         });
 
         mainFrame.getMenuPanel().setExitAction((ActionEvent e) -> {
             System.exit(0);
         });
 
-        // daa implementare setup panel
+        // setup panel (sto piangendo)
+        mainFrame.getSetupPanel().setPlayAction((ActionEvent e) -> {
+            String p1Name = mainFrame.getSetupPanel().getP1Name();
+            DeckType p1Deck = mainFrame.getSetupPanel().getP1DeckType();
+            String p2Name = mainFrame.getSetupPanel().getP2Name();
+            DeckType p2Deck = mainFrame.getSetupPanel().getP2DeckType();
+            
+            // controllo sui nomi
+            if (p1Name.trim().isEmpty() || p2Name.trim().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(mainFrame, 
+                    "Inserisci i nomi di entrambi i giocatori!", 
+                    "Errore Setup", 
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            // Se la va alloea parte
+            onSetupConfirmed(p1Name, p1Deck, p2Name, p2Deck);
+        });
     }
+    
 
     public void startApp() {
         mainFrame.setVisible(true);

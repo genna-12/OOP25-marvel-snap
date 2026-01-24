@@ -23,6 +23,8 @@ public class Game {
 
     public void startGame(final String p1Name, final DeckType d1, final String p2Name, final DeckType d2) {
         // logica da implementare
+        // devi usare CardFactory per creare i deck (work in progress)
+        // LocationFactory per creare le location (stub)
 
         notifyObserver();
     }

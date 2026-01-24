@@ -16,6 +16,9 @@ public class Player {
         this.hand = new Hand();
     }
 
+    //costruttore vuoto per test
+    public Player() {}
+
     public void drawCard(){}
 
     public void playCard(Card c){}
