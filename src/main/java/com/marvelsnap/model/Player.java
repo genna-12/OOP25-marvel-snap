@@ -1,9 +1,20 @@
 package com.marvelsnap.model;
 
+import java.util.List;
+
 public class Player {
     private String name;
     private int currentEnergy;
     private int totalScore;
+    private Deck deck;
+    private Hand hand;
+
+    public Player(String name, List<Card> deck) {
+        this.name = name;
+        this.deck = new Deck(deck);
+        this.deck.shuffle();
+        this.hand = new Hand();
+    }
 
     public void drawCard(){}
 

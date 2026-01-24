@@ -1,6 +1,7 @@
 package com.marvelsnap.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.marvelsnap.model.Card;
@@ -22,6 +23,8 @@ import com.marvelsnap.model.Location;
 public class CardFactory {
     private int id = 0;
 
+    // crea un mazzo di carte preimpostato, in base al tipo di mazzo richiesto (DeckType)
+    // hard coded per evitare complessità aggiuntive come json o db
     public List<Card> createDeck(DeckType type) {
         List<Card> deck = new ArrayList<>();
         switch (type) {
@@ -52,7 +55,7 @@ public class CardFactory {
     }
 
     private int idGenerator() {
-        return id++;
+        return ++id;
     }
 
     public Card createCard(String id) {
