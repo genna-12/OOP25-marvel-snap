@@ -41,7 +41,7 @@ public class MainController {
                 return;
             }
             
-            // Se la va alloea parte
+            // Se la và alloea parte
             onSetupConfirmed(p1Name, p1Deck, p2Name, p2Deck);
         });
     }
