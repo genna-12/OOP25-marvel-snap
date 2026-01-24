@@ -69,4 +69,8 @@ public class Game {
     public Player getPlayer2() {
         return players[1];
     }
+
+    public Player getPlayer(int index) {
+        return players[index];
+    }
 }

@@ -34,4 +34,8 @@ public class Player {
     public Deck getDeck() {
         return deck;
     }
+
+    public int getCurrentEnergy() {
+        return currentEnergy;
+    }
 }
