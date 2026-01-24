@@ -25,6 +25,7 @@ public class Game {
         // logica da implementare
         // devi usare CardFactory per creare i deck (work in progress)
         // LocationFactory per creare le location (stub)
+        // in ogni caso usali
 
         notifyObserver();
     }
