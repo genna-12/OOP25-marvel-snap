@@ -16,7 +16,7 @@ public class GamePanel extends JPanel implements GameObserver {
     private CardLayout cardLayout;
     private JPanel infoPanel;
     private GameController controller;
-    private JPanel activeGameContainer; // Aggiungere campo all'UML
+    private JPanel activeGameContainer; 
 
     public GamePanel(){
         cardLayout = new CardLayout();

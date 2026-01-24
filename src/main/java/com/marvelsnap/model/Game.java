@@ -22,8 +22,10 @@ public class Game {
     }
 
     public void startGame(final String p1Name, final DeckType d1, final String p2Name, final DeckType d2) {
-        //logica da implementare
-        
+        // logica da implementare
+        // devi usare CardFactory per creare i deck (work in progress)
+        // LocationFactory per creare le location (stub)
+
         notifyObserver();
     }
 
@@ -47,5 +49,11 @@ public class Game {
         for (GameObserver obs : observers) {
             obs.onGameUpdated();
         }
+    }
+
+    // getters utili uml std non strict fate i get/set che ci servono
+
+    public List<Location> getLocations() {
+        return locations;
     }
 }
