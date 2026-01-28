@@ -1,6 +1,7 @@
 package com.marvelsnap.view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import com.marvelsnap.controller.GameController;
 import com.marvelsnap.model.Game;
@@ -34,10 +35,6 @@ public class GamePanel extends JPanel implements GameObserver {
         handPanel = new HandPanel();
         createInfoPanel();
 
-        infoPanel = new JPanel();
-        infoPanel.add(new JLabel("Info Panel"));
-        infoPanel.setBackground(Color.LIGHT_GRAY);
-
         activeGameContainer = new JPanel(new BorderLayout());
         activeGameContainer.add(infoPanel, BorderLayout.NORTH);
         activeGameContainer.add(boardPanel, BorderLayout.CENTER);
@@ -68,22 +65,24 @@ public class GamePanel extends JPanel implements GameObserver {
     private void createInfoPanel() {
         infoPanel = new JPanel(new BorderLayout());
         infoPanel.setBackground(Color.BLACK);
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         infoPanel.setPreferredSize(new Dimension(0, 50));
+        Border lineaGrigia = BorderFactory.createLineBorder(Color.GRAY, 1);
+        Border spazioInterno = BorderFactory.createEmptyBorder(10, 20, 10, 20);
+        infoPanel.setBorder(BorderFactory.createCompoundBorder(lineaGrigia, spazioInterno));
 
         // Sinistra
-        lblTurnInfo = new JLabel("TURNO 1/" + Constants.MAX_TURNS);
+        lblTurnInfo = new JLabel("TURNO: --/" + Constants.MAX_TURNS);
         lblTurnInfo.setForeground(Color.WHITE);
         lblTurnInfo.setFont(new Font("Arial", Font.BOLD, 16));
 
         // Centro
-        lblPlayerName = new JLabel("GIOCATORE 1");
+        lblPlayerName = new JLabel("Caricamento...");
         lblPlayerName.setForeground(Color.ORANGE);
         lblPlayerName.setFont(new Font("Arial", Font.BOLD, 18));
         lblPlayerName.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Destra
-        lblEnergyInfo = new JLabel("ENERGIA: 1");
+        lblEnergyInfo = new JLabel("ENERGIA: --");
         lblEnergyInfo.setForeground(Color.CYAN);
         lblEnergyInfo.setFont(new Font("Arial", Font.BOLD, 16));
 
@@ -99,13 +98,15 @@ public class GamePanel extends JPanel implements GameObserver {
     }
 
     public void updateView(Game game) {
-        if (game == null)
+        if (game == null || game.getTurnManager() == null)
             return;
         int turn = game.getTurnManager().getCurrentTurn();
         int playerIdx = game.getTurnManager().getCurrentPlayerIndex();
         Player currentPlayer = game.getPlayer(playerIdx);
         String name = (playerIdx == 0) ? p1Name : p2Name;
-        int energy = currentPlayer.getCurrentEnergy();
+        // non passo currentPlayer.getCurrentEnergy() per evitare null pointer exception
+        // se p3 è indietro
+        int energy = (currentPlayer != null) ? currentPlayer.getCurrentEnergy() : 0;
 
         // aggiorno
         // infopanel
@@ -114,12 +115,18 @@ public class GamePanel extends JPanel implements GameObserver {
         lblEnergyInfo.setText("ENERGIA: " + energy);
         // boardpanel
         if (boardPanel != null) {
-            boardPanel.refresh(game.getLocations());
+            if (game.getLocations() != null) { // questa condizione non dovrebbe mai verificarsi ma serve per debug se
+                                               // altri non hanno ancora finito
+                boardPanel.refresh(game.getLocations());
+            }
         }
         // handpanel
         if (handPanel != null) {
-            // Mostra SOLO la mano del giocatore corrente
-            handPanel.setHand(currentPlayer.getHand());
+            // Mostra SOLO la mano del giocatore corrente (aggiungo if per debug per evitare
+            // nullpointer)
+            if (currentPlayer != null && currentPlayer.getHand() != null) {
+                handPanel.setHand(currentPlayer.getHand());
+            }
         }
 
         revalidate();

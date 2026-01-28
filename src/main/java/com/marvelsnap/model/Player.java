@@ -38,4 +38,12 @@ public class Player {
     public int getCurrentEnergy() {
         return currentEnergy;
     }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
