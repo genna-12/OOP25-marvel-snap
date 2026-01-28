@@ -11,7 +11,7 @@ import com.marvelsnap.util.Constants;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements GameObserver {
-    
+
     private IntermissionPanel intermissionPanel;
     private BoardPanel boardPanel;
     private HandPanel handPanel;
@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements GameObserver {
     private JLabel lblEnergyInfo;
     private JLabel lblPlayerName;
 
-    public GamePanel(){
+    public GamePanel() {
         cardLayout = new CardLayout();
         setLayout(cardLayout);
 
@@ -45,10 +45,22 @@ public class GamePanel extends JPanel implements GameObserver {
 
         add(activeGameContainer, "Board");
         add(intermissionPanel, "Intermission");
+
+        // debug
+        JButton btnDebugTurn = new JButton("[DEBUG] Simula Fine Turno");
+        btnDebugTurn.setBackground(Color.RED);
+        btnDebugTurn.setForeground(Color.WHITE);
+
+        btnDebugTurn.addActionListener(e -> {
+            // Simulo che il Player 1 abbia finito e tocchi al Player 2
+            onTurnChanged(1); // 1 = Indice del Player 2
+        });
+
+        activeGameContainer.add(btnDebugTurn, BorderLayout.WEST);
     }
-    
+
     // Aggiungere metodo all'UML
-    public void setController(GameController controller){
+    public void setController(GameController controller) {
         this.controller = controller;
     }
 
@@ -58,7 +70,7 @@ public class GamePanel extends JPanel implements GameObserver {
         infoPanel.setBackground(Color.BLACK);
         infoPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         infoPanel.setPreferredSize(new Dimension(0, 50));
-        
+
         // Sinistra
         lblTurnInfo = new JLabel("TURNO 1/" + Constants.MAX_TURNS);
         lblTurnInfo.setForeground(Color.WHITE);
@@ -81,16 +93,17 @@ public class GamePanel extends JPanel implements GameObserver {
     }
 
     // Aggiungere metodo all'UML
-    public void setPlayerNames(String p1Name, String p2Name){
+    public void setPlayerNames(String p1Name, String p2Name) {
         this.p1Name = p1Name;
         this.p2Name = p2Name;
     }
 
-    public void updateView(Game game){
-        if (game == null) return;
+    public void updateView(Game game) {
+        if (game == null)
+            return;
         int turn = game.getTurnManager().getCurrentTurn();
         int playerIdx = game.getTurnManager().getCurrentPlayerIndex();
-        Player currentPlayer = game.getPlayer(playerIdx); 
+        Player currentPlayer = game.getPlayer(playerIdx);
         String name = (playerIdx == 0) ? p1Name : p2Name;
         int energy = currentPlayer.getCurrentEnergy();
 
@@ -117,25 +130,32 @@ public class GamePanel extends JPanel implements GameObserver {
         showBoard();
     }
 
-    public void showBoard(){
+    public void showBoard() {
         cardLayout.show(this, "Board");
     }
 
-    public void showIntermission(){
+    public void showIntermission() {
         cardLayout.show(this, "Intermission");
     }
 
-    public void showEndGame(String message){
+    public void showEndGame(String message) {
         JOptionPane.showMessageDialog(this, "Il vincitore è: " + message);
     }
 
-    @Override public void onGameUpdated() { repaint();}
-    @Override public void onTurnChanged(int playerIndex) {
+    @Override
+    public void onGameUpdated() {
+        repaint();
+    }
+
+    @Override
+    public void onTurnChanged(int playerIndex) {
         String nextName = (playerIndex == 0) ? p1Name : p2Name;
         intermissionPanel.setNextPlayerName(nextName);
         showIntermission();
     }
-    @Override public void onGameOver(String winnerName) {
+
+    @Override
+    public void onGameOver(String winnerName) {
         showEndGame("Il vincitore è: " + winnerName);
     }
 

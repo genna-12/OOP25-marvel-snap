@@ -79,7 +79,7 @@ public class SetupPanel extends JPanel{
         add(btnPlay, gbc);
     }
 
-    // serve per le etichette
+    // serve per creare le etichette
     private JLabel createLabel(String text) {
         JLabel l = new JLabel(text);
         l.setForeground(Color.WHITE);
