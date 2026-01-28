@@ -34,4 +34,16 @@ public class Player {
     public Deck getDeck() {
         return deck;
     }
+
+    public int getCurrentEnergy() {
+        return currentEnergy;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

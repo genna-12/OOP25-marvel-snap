@@ -63,8 +63,7 @@ public class Game {
             if(turnManager.getTurnNumber() > this.turnManager.getMaxTurns()) {
                 final Player winner = this.checkWinCondition();
                 for(final GameObserver obs : this.observers) {
-                    obs.onGameOver(null); /*Da rivedere -> inserire nella classe Player dei getter per i campi, 
-                                                        per favore  */
+                    obs.onGameOver(winner.getName()); 
                 }
                 return;
             }
@@ -107,5 +106,9 @@ public class Game {
 
     public Player getPlayer2() {
         return players[1];
+    }
+
+    public Player getPlayer(int index) {
+        return players[index];
     }
 }
