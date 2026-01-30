@@ -9,7 +9,7 @@ public class Hand {
 
     public void add(Card c){}
 
-    public void remove(){}
+    public void remove(Card c){}
 
     public List<Card> getCards(){
         return Collections.unmodifiableList(this.cards);
