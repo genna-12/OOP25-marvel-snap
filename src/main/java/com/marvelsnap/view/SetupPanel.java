@@ -1,0 +1,110 @@
+package com.marvelsnap.view;
+
+import javax.swing.*;
+
+import com.marvelsnap.util.DeckType;
+
+import java.awt.*;
+import java.awt.event.ActionListener;
+
+public class SetupPanel extends JPanel{
+    private JTextField txtP1Name;
+    private JComboBox<DeckType> cmbDeckP1;
+    private JTextField txtP2Name;
+    private JComboBox<DeckType> cmbDeckP2;
+    private JButton btnPlay;
+
+    public SetupPanel() {
+        // qui uso GridBag perché devo allineare tutto senza fare 200 panel
+        setLayout(new GridBagLayout());
+        setBackground(new Color(30, 30, 60)); // blu
+
+        // uso constraints per posizionare gli elementi
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel title = new JLabel("CONFIGURAZIONE PARTITA");
+        title.setFont(new Font("Impact", Font.BOLD, 30));
+        title.setForeground(Color.ORANGE);
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(title, gbc);
+
+        // primo giocatore
+        gbc.gridwidth = 1; gbc.gridy = 1;
+        add(createLabel("Nome Giocatore 1:"), gbc);
+
+        gbc.gridx = 1;
+        txtP1Name = new JTextField(20);
+        add(txtP1Name, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 2;
+        add(createLabel("Mazzo P1:"), gbc);
+
+        gbc.gridx = 1;
+        cmbDeckP1 = new JComboBox<>(DeckType.values());
+        add(cmbDeckP1, gbc);
+
+        // separatore
+        JSeparator sep = new JSeparator();
+        gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2;
+        add(sep, gbc);
+
+        // secondo giocatore analogo al primo 
+        gbc.gridwidth = 1; gbc.gridy = 4;
+        add(createLabel("Nome Giocatore 2:"), gbc);
+
+        gbc.gridx = 1;
+        txtP2Name = new JTextField(20);
+        add(txtP2Name, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 5;
+        add(createLabel("Mazzo P2:"), gbc);
+
+        gbc.gridx = 1;
+        cmbDeckP2 = new JComboBox<>(DeckType.values());
+        cmbDeckP2.setSelectedItem(DeckType.VILLAINS); // Default diverso
+        add(cmbDeckP2, gbc);
+
+        // starta partita
+        gbc.gridx = 0; gbc.gridy = 6; gbc.gridwidth = 2;
+        gbc.insets = new Insets(30, 10, 10, 10);
+        
+        btnPlay = new JButton("INIZIA BATTAGLIA");
+        btnPlay.setBackground(new Color(0, 150, 0)); // Verde
+        btnPlay.setForeground(Color.WHITE);
+        btnPlay.setFont(new Font("Arial", Font.BOLD, 20));
+        btnPlay.setPreferredSize(new Dimension(200, 50));
+        add(btnPlay, gbc);
+    }
+
+    // serve per creare le etichette
+    private JLabel createLabel(String text) {
+        JLabel l = new JLabel(text);
+        l.setForeground(Color.WHITE);
+        l.setFont(new Font("Arial", Font.BOLD, 14));
+        return l;
+    }
+
+    public void setPlayAction(ActionListener action){
+        btnPlay.addActionListener(action);
+    }
+
+    // Getters
+    public String getP1Name() {
+        return txtP1Name.getText();
+    }
+
+    public DeckType getP1DeckType() {
+        return (DeckType) cmbDeckP1.getSelectedItem();
+    }
+
+    public String getP2Name() {
+        return txtP2Name.getText();
+    }
+
+    public DeckType getP2DeckType() {
+        return (DeckType) cmbDeckP2.getSelectedItem();
+    }
+}
