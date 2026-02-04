@@ -1,6 +1,7 @@
 package com.marvelsnap.model;
 
 import java.util.List;
+import com.marvelsnap.util.Constants;
 
 public class Player {
     private String name;
@@ -21,7 +22,7 @@ public class Player {
 
     public void drawCard(){
         
-        if(hand.getCards().size() < 7){
+        if(hand.getCards().size() < Constants.MAX_HAND_SIZE){
             Card drawn = deck.draw();
             if(drawn != null){
                 hand.add(drawn);
