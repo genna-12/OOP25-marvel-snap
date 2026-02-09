@@ -29,8 +29,14 @@ public class BoardPanel extends JPanel {
 
     public void refresh(List<Location> locations) {
         for (int i = 0; i < 3; i++) {
-            this.locationPanels.get(i).setLocation(locations.get(i));
-            this.locationPanels.get(i).refresh();
+            if (false) { //finché non finisco LocationFactory per evitare index out of bound
+                this.locationPanels.get(i).setLocation(locations.get(i));
+                this.locationPanels.get(i).refresh();
+            }
         }
+    }
+
+    public List<LocationPanel> getLocationPanels() {
+        return this.locationPanels;
     }
 }
