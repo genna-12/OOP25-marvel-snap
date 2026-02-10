@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import com.marvelsnap.model.Card;
 import com.marvelsnap.model.Hand;
+import com.marvelsnap.controller.GameController;
 
 public class HandPanel extends JPanel {
     private List<CardPanel> cardPanels = new ArrayList<>();
@@ -34,11 +35,12 @@ public class HandPanel extends JPanel {
         });
     }
 
-    public void setHand(Hand hand) {
+    public void setHand(Hand hand, GameController controller) {
         for(Card card : hand.getCards()){
-            cardPanels.add(new CardPanel());
-            cardPanels.get(cardPanels.size() - 1).setCard(card);
+            CardPanel cp = new CardPanel();
+            cp.setCard(card);
 
+            cp.setOnClickAction(() -> controller.onCardClicked(card));
             this.add(cardPanels.get(cardPanels.size() - 1));
         }
         revalidate();
