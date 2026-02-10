@@ -37,10 +37,10 @@ public abstract class Location {
     }
 
     public boolean isFull(int pIdx) {
-        if (pIdx == 0 && this.cardsPlayer1.size() == capacity) {
+        if (pIdx == 0 && this.cardsPlayer1.size() >= capacity) {
             return true;
         }
-        if (pIdx == 1 && this.cardsPlayer2.size() == capacity) {
+        if (pIdx == 1 && this.cardsPlayer2.size() >= capacity) {
                 return true;
         }
         return false;
