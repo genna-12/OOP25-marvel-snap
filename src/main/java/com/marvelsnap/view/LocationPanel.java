@@ -2,8 +2,12 @@ package com.marvelsnap.view;
 
 import javax.swing.*;
 import com.marvelsnap.model.Location;
+import com.marvelsnap.controller.GameController;
 import com.marvelsnap.model.Card;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.*;
 import java.util.List;
 
@@ -21,6 +25,7 @@ public class LocationPanel extends JPanel {
     private JLabel p2PowerLabel;
     private List<CardPanel> p1Cards;
     private List<CardPanel> p2Cards;
+    private GameController controller;
 
     public LocationPanel(int locIndex) {
         this.locationIndex = locIndex;
@@ -56,6 +61,15 @@ public class LocationPanel extends JPanel {
         this.add(this.p2CardsArea);
         this.add(this.locationArea);
         this.add(this.p1CardsArea);
+        
+        if(false) { //finché non viene implementato il passaggio al LocationPanel del controller
+            this.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    controller.onLocationClicked(locIndex);
+                }
+        
+            });
+        }
     }
 
     public void setLocation(Location loc) {
@@ -83,4 +97,8 @@ public class LocationPanel extends JPanel {
             this.p2CardsArea.add(newCard);
         }
     }       
+
+    public void setController(GameController controller) {
+        this.controller = controller;
+    }
 }
