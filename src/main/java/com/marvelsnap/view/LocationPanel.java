@@ -61,33 +61,28 @@ public class LocationPanel extends JPanel {
         this.add(this.infoArea);
         this.add(this.p1CardsArea);
 
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (controller != null) {
-                    controller.onLocationClicked(locationIndex);
-                } else {
-                    System.out.println("Controller non settatoo in LocationPanel");
-                }
-            }
-        });
+        propagateMouseListener();
     }
 
     public void setLocation(Location loc) {
         this.location = loc;
         if (this.location != null)
-            this.infoLabel.setText(this.location.getDescription());
+            this.infoLabel.setText(loc.getName());
     }
 
     public void refresh() {
-        if(this.location == null) return;
+        if (this.location == null)
+            return;
 
         this.p1PowerLabel.setText("P1: " + this.location.calculatePower(0));
         this.p2PowerLabel.setText("P2: " + this.location.calculatePower(1));
 
         // non mi ricordo il tag ma se la descrizione è lunga va mandata a capo,
-        // aggiungi l'html per mandarlo a capo, cerca il tag da qualche parte ora non ho voglia
-        this.infoLabel.setText(this.location.getDescription());
+        // aggiungi l'html per mandarlo a capo, cerca il tag da qualche parte ora non ho
+        // voglia
+        this.infoLabel.setText(this.location.getName());
+        this.infoLabel.setToolTipText(
+                "<html><body width='200'>" + this.location.getDescription() + "</body></html>");
 
         this.p1CardsArea.removeAll();
         for (Card c : this.location.getCards(0)) {
@@ -106,5 +101,19 @@ public class LocationPanel extends JPanel {
 
     public void setController(GameController controller) {
         this.controller = controller;
+    }
+
+    private void propagateMouseListener() {
+        MouseAdapter clicker = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (controller != null)
+                    controller.onLocationClicked(locationIndex);
+            }
+        };
+
+        this.p1CardsArea.addMouseListener(clicker);
+        this.p2CardsArea.addMouseListener(clicker);
+        this.infoArea.addMouseListener(clicker);
     }
 }

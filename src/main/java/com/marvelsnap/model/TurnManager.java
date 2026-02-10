@@ -12,6 +12,7 @@ public class TurnManager {
     private int maxTurns;
     private boolean p1Played = false;
     private boolean p2Played = false;
+
     /**
      * Class constructor.
      */
@@ -35,11 +36,12 @@ public class TurnManager {
      * It resets player index to 0.
      */
     public void nextTurn() {
-        this.currentTurn++;
-        this.currentPlayerIndex = 0;
+        if (this.currentTurn <= this.maxTurns)
+            currentTurn++;
         this.p1Played = false;
         this.p2Played = false;
         this.currentPlayerIndex = 0;
+        System.out.println("[DEBUG] NextTurn: Inizia turno " + currentTurn);
     }
 
     /**
@@ -49,6 +51,7 @@ public class TurnManager {
      */
     public void switchPlayer() {
         this.currentPlayerIndex = (this.currentPlayerIndex == 0) ? 1 : 0;
+        System.out.println("[DEBUG] SwitchPlayer: Ora tocca a P" + (this.currentPlayerIndex + 1));
     }
 
     /**
@@ -101,5 +104,6 @@ public class TurnManager {
             p1Played = true;
         else
             p2Played = true;
+        System.out.println("[DEBUG] RegisterMove: P" + (playerIdx+1) + " ha finito. Stati: P1=" + p1Played + ", P2=" + p2Played);
     }
 }

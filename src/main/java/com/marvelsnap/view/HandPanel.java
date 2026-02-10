@@ -2,6 +2,8 @@ package com.marvelsnap.view;
 
 import java.awt.*;
 import javax.swing.JPanel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import com.marvelsnap.model.Card;
 import com.marvelsnap.model.Hand;
@@ -21,13 +23,14 @@ public class HandPanel extends JPanel {
             for (Card card : hand.getCards()) {
                 CardPanel cp = new CardPanel();
                 cp.setCard(card);
-                cp.addMouseListener(new java.awt.event.MouseAdapter() {
+                // questo è il collegamento di cui parlavo, quando clicco su una carta del mio hand, chiamo il metodo onCardClicked del controller
+                cp.addMouseListener(new MouseAdapter() {
                     @Override
-                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    public void mouseClicked(MouseEvent evt) {
                         if (controller != null) {
+                            System.out.println("Click rilevato su carta: " + card.getName());
                             controller.onCardClicked(card);
-                            revalidate();
-                            repaint();
+                            cp.toggleSelection();
                         } else {
                             System.out.println("Controller non settato in HandPanel");
                         }

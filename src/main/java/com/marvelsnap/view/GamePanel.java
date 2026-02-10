@@ -43,6 +43,8 @@ public class GamePanel extends JPanel implements GameObserver {
         add(activeGameContainer, "Board");
         add(intermissionPanel, "Intermission");
 
+        cardLayout.show(this, "Board");
+
         // fine turno
         JButton btnEndTurn = new JButton("TERMINA TURNO");
         btnEndTurn.setBackground(new Color(200, 50, 50)); // Rosso scuro
