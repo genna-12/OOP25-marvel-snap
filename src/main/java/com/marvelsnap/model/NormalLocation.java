@@ -13,6 +13,7 @@ public class NormalLocation extends Location {
         this.targetedCosts = targetedCosts;
     }
 
+    @Override
     public void applyEffect(Game game) {
         for (Card c : this.cardsPlayer1) {
             if (this.targetedCosts.contains(c.getCost())) {

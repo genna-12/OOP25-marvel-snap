@@ -169,4 +169,8 @@ public class GamePanel extends JPanel implements GameObserver {
     public IntermissionPanel getIntermissionPanel() {
         return intermissionPanel;
     }
+
+    public BoardPanel getBoardPanel() {
+        return this.boardPanel;
+    }
 }

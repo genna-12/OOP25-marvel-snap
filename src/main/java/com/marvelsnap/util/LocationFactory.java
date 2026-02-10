@@ -3,9 +3,11 @@ package com.marvelsnap.util;
 import java.util.*;
 
 import com.marvelsnap.model.Game;
+import com.marvelsnap.model.GameObserver;
 import com.marvelsnap.model.Location;
 import com.marvelsnap.model.NormalLocation;
 import com.marvelsnap.model.ReducedCostLocation;
+import com.marvelsnap.model.Card;
 
 public class LocationFactory {
 
@@ -38,18 +40,21 @@ public class LocationFactory {
         this.locations.add(new ReducedCostLocation("Utopia", "Riduce di 1 il costo delle carte di costo 3 e 4 presenti in mano", 1, List.of(3, 4)));
 
         this.locations.add(new Location("Il Trono Spaziale", "Solo una carta può essere posizionata qui") {
+            @Override
             protected void applyEffect(Game game) {
                 this.capacity = 1;   
             }
         });
 
         this.locations.add(new Location("Sanctum Sanctorum", "Nessun giocatore può giocare carte qui") {
+            @Override
             protected void applyEffect(Game game) {
                 this.capacity = 0;
             }
         });
 
         this.locations.add(new Location("Progetto Pegasus", "+5 energia durante questo turno") {
+            @Override
             protected void applyEffect(Game game) {
                 game.getPlayer1().resetEnergy(game.getPlayer1().getCurrentEnergy() + 5);
                 game.getPlayer2().resetEnergy(game.getPlayer2().getCurrentEnergy() + 5);
@@ -57,6 +62,7 @@ public class LocationFactory {
         });
 
         this.locations.add(new Location("Officina del Riparatore", "+1 energia durante questo turno") {
+            @Override
             protected void applyEffect(Game game) {
                 game.getPlayer1().resetEnergy(game.getPlayer1().getCurrentEnergy() + 1);
                 game.getPlayer2().resetEnergy(game.getPlayer2().getCurrentEnergy() + 1);
@@ -64,6 +70,7 @@ public class LocationFactory {
         });
 
         this.locations.add(new Location("Nova Roma", "Pesca una carta") {
+            @Override
             protected void applyEffect(Game game) {
                 game.getPlayer1().drawCard();
                 game.getPlayer2().drawCard();
@@ -71,6 +78,7 @@ public class LocationFactory {
         });
 
         this.locations.add(new Location("Olympia", "Pesca due carte") {
+            @Override
             protected void applyEffect(Game game) {
                 for (int i = 0; i < 2; i++) {
                     game.getPlayer1().drawCard();
@@ -79,11 +87,51 @@ public class LocationFactory {
             }
         });
 
-        // debug
-        List<Location> threeLocations = new ArrayList<>();
-        threeLocations.add(this.locations.getFirst());
-        threeLocations.add(this.locations.getLast());
-        threeLocations.add(this.locations.get(5));
-        return threeLocations;
+        this.locations.add(new Location("Limbo", "In questa partita ci sono 7 turni") {
+            @Override
+            protected void applyEffect(Game game) {
+                game.getTurnManager().setMaxTurns(7);
+            }
+        });
+
+        this.locations.add(new Location("Castello di Zemo", "Scambia di lato le carte posizionate qui") {
+            @Override
+            protected void applyEffect(Game game) {
+                List<Card> temp = new ArrayList<>(this.cardsPlayer1);
+                this.cardsPlayer1 = this.cardsPlayer2;
+                this.cardsPlayer2 = temp;
+            }
+        });
+
+        this.locations.add(new Location("Il Mondo Assassino", "All'inizio del quarto turno le carte presenti qui vengono distrutte") {
+            @Override
+            protected void applyEffect(Game game) {
+                
+                GameObserver locationObserver = new GameObserver() {
+                    private boolean effectCompleted = false;
+
+                    @Override
+                    public void onGameOver(String winnerName) {
+                    }
+
+                    @Override
+                    public void onGameUpdated() {
+                    }
+
+                    @Override 
+                    public void onTurnChanged(int playerIndex) {
+                        if (game.getTurnManager().getCurrentTurn() == 4 && !this.effectCompleted) {
+                            cardsPlayer1 = new ArrayList<>();
+                            cardsPlayer2 = new ArrayList<>();
+                            this.effectCompleted = true;
+                        }
+                    }
+                };
+                game.addObserver(locationObserver);
+            }
+        });
+
+        Collections.shuffle(this.locations);
+        return new ArrayList<>(this.locations.subList(0, 3));
     }
 }

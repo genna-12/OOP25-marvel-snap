@@ -91,5 +91,13 @@ public class TurnManager {
         return this.cycleComplete;
     }
 
+    /**
+     * Sets the maximum number of turns.
+     * @param maxTurns  maximum number of turns.
+     */
+    public void setMaxTurns(int maxTurns) {
+        this.maxTurns = maxTurns;
+    }
+
 }
 
