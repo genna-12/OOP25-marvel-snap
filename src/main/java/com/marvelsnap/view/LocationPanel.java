@@ -80,9 +80,10 @@ public class LocationPanel extends JPanel {
         // non mi ricordo il tag ma se la descrizione è lunga va mandata a capo,
         // aggiungi l'html per mandarlo a capo, cerca il tag da qualche parte ora non ho
         // voglia
-        this.infoLabel.setText(this.location.getName());
-        this.infoLabel.setToolTipText(
-                "<html><body width='200'>" + this.location.getDescription() + "</body></html>");
+        this.infoLabel.setText("<html>" + "<font size = '5'> <b>" +
+            this.location.getName() + "</b></font><br> " +
+            this.location.getDescription() + "</html");
+                
 
         this.p1CardsArea.removeAll();
         for (Card c : this.location.getCards(0)) {
