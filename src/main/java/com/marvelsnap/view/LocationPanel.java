@@ -87,7 +87,7 @@ public class LocationPanel extends JPanel {
             this.infoLabel.setText(loc.getName());
     }
 
-    public void refresh() {
+    public void refresh(int viewerIdx) {
         if (this.location == null)
             return;
 
@@ -106,10 +106,12 @@ public class LocationPanel extends JPanel {
             this.p1Cells.get(i).removeAll();
         }
         for (Card c : this.location.getCards(0)) {
-            CardPanel newCard = new CardPanel();
-            newCard.setCard(c);
-            this.p1Cells.get(counter).add(newCard);
-            counter++;
+            if (viewerIdx == 0 || c.isRevealed()) {
+                CardPanel newCard = new CardPanel();
+                newCard.setCard(c);
+                this.p1Cells.get(counter).add(newCard);
+                counter++;
+            }
         }
 
         counter = 0;
@@ -117,10 +119,12 @@ public class LocationPanel extends JPanel {
             this.p2Cells.get(i).removeAll();
         }
         for (Card c : this.location.getCards(1)) {
-            CardPanel newCard = new CardPanel();
-            newCard.setCard(c);
-            this.p2Cells.get(counter).add(newCard);
-            counter++;
+            if (viewerIdx == 1 || c.isRevealed()) {
+                CardPanel newCard = new CardPanel();
+                newCard.setCard(c);
+                this.p2Cells.get(counter).add(newCard);
+                counter++;
+            }
         }
     }
 
