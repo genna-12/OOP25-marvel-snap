@@ -48,6 +48,15 @@ public class MainController {
         mainFrame.getGamePanel().getIntermissionPanel().setReadyAction((ActionEvent e) -> {
             mainFrame.getGamePanel().onReadyToPlay();
         });
+
+        // questo per tornare al menu dopo la partita
+        mainFrame.getGamePanel().setBackToMenuAction(() -> {
+            System.out.println("Torno al Menu Principale...");
+            mainFrame.getGamePanel().resetView(); 
+            
+            this.game = null;
+            startApp();
+        });
     }
     
 

@@ -92,6 +92,7 @@ public class GameController implements GameObserver {
     public void onEndTurnClicked() {
         if (this.inputState == InputState.IDLE || this.inputState == InputState.CARD_SELECTED) {
             System.out.println("[CTRL] Fine turno cliccata.");
+            this.inputState = InputState.WAITING_FOR_SWAP;
             this.view.showIntermission();
             game.endTurn();
         }
@@ -152,6 +153,6 @@ public class GameController implements GameObserver {
     @Override
     public void onGameOver(final String winnerName) {
         this.inputState = InputState.GAME_OVER;
-        this.view.showEndGame(winnerName);
+        this.view.onGameOver(winnerName);
     }
 }
