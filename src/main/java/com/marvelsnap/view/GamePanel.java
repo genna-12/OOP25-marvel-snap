@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements GameObserver {
     private JLabel lblTurnInfo;
     private JLabel lblEnergyInfo;
     private JLabel lblPlayerName;
+    private Runnable backToMenuAction;
 
     public GamePanel() {
         cardLayout = new CardLayout();
@@ -54,7 +55,7 @@ public class GamePanel extends JPanel implements GameObserver {
 
         btnEndTurn.addActionListener(e -> {
             if (controller != null) {
-                controller.onEndTurnClicked(); 
+                controller.onEndTurnClicked();
             }
         });
         activeGameContainer.add(btnEndTurn, BorderLayout.EAST);
@@ -64,7 +65,7 @@ public class GamePanel extends JPanel implements GameObserver {
     public void setController(GameController controller) {
         this.controller = controller;
         if (boardPanel != null) {
-            boardPanel.setController(controller); 
+            boardPanel.setController(controller);
         }
     }
 
@@ -152,8 +153,17 @@ public class GamePanel extends JPanel implements GameObserver {
         cardLayout.show(this, "Intermission");
     }
 
-    public void showEndGame(String message) {
-        JOptionPane.showMessageDialog(this, "Il vincitore è: " + message);
+    public int showEndGame(String winnerName) {
+        Object[] options = { "Torna al Menu", "Esci" };
+        return JOptionPane.showOptionDialog(
+                this,
+                "PARTITA TERMINATA!\nVincitore: " + winnerName,
+                "Game Over",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]);
     }
 
     @Override
@@ -170,10 +180,50 @@ public class GamePanel extends JPanel implements GameObserver {
 
     @Override
     public void onGameOver(String winnerName) {
-        showEndGame("Il vincitore è: " + winnerName);
+
+        int choice = showEndGame(winnerName);
+
+        if (choice == 0) {
+            // torno al menu
+            if (backToMenuAction != null) {
+                backToMenuAction.run();
+            }
+        } else {
+            // chiudo l'app
+            System.exit(0);
+        }
+    }
+
+    public void setBackToMenuAction(Runnable action) {
+        this.backToMenuAction = action;
     }
 
     public IntermissionPanel getIntermissionPanel() {
         return intermissionPanel;
+    }
+
+    // resetta tutta la schermata, ho aggiunto helper in locationpanel e boardpanel
+    public void resetView() {
+        this.p1Name = "Player 1";
+        this.p2Name = "Player 2";
+
+        lblTurnInfo.setText("TURNO: --/" + Constants.MAX_TURNS);
+        lblPlayerName.setText("CARICAMENTO...");
+        lblEnergyInfo.setText("ENERGIA: --");
+
+        if (boardPanel != null) {
+            boardPanel.reset();
+        }
+
+        if (handPanel != null) {
+            handPanel.removeAll();
+            handPanel.revalidate();
+            handPanel.repaint();
+        }
+
+        showBoard();
+
+        revalidate();
+        repaint();
     }
 }
