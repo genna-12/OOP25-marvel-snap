@@ -45,4 +45,11 @@ public class BoardPanel extends JPanel {
             lp.setController(controller);
         }
     }
+
+    // resetta la board serviva per il mio GamePanel P2
+    public void reset() {
+        for (LocationPanel lp : locationPanels) {
+            lp.reset();
+        }
+    }
 }

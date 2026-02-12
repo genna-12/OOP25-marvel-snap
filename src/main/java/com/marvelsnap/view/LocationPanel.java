@@ -116,4 +116,15 @@ public class LocationPanel extends JPanel {
         this.p2CardsArea.addMouseListener(clicker);
         this.infoArea.addMouseListener(clicker);
     }
+
+    // reset di location panel serviva sempre al mio GamePanel P2
+    public void reset() {
+        infoLabel.setText("Location");
+        
+        p1CardsArea.removeAll();
+        p2CardsArea.removeAll();
+        
+        revalidate();
+        repaint();
+    }
 }

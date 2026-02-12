@@ -121,7 +121,8 @@ public class Tests {
         }
 
         @Override
-        public void showEndGame(String winnerName) {
+        public int showEndGame(String winnerName) {
+            return 0; 
         }
     }
 }

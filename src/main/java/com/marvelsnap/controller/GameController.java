@@ -153,6 +153,6 @@ public class GameController implements GameObserver {
     @Override
     public void onGameOver(final String winnerName) {
         this.inputState = InputState.GAME_OVER;
-        this.view.showEndGame(winnerName);
+        this.view.onGameOver(winnerName);
     }
 }
