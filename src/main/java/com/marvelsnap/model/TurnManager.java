@@ -99,6 +99,14 @@ public class TurnManager {
         return p1Played && p2Played;
     }
 
+    /**
+     * Sets the maximum number of turns.
+     * @param maxTurns  maximum number of turns.
+     */
+    public void setMaxTurns(int maxTurns) {
+        this.maxTurns = maxTurns;
+    }
+
     public void registerMove(int playerIdx) {
         if (playerIdx == 0)
             p1Played = true;

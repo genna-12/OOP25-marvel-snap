@@ -144,7 +144,7 @@ public class GamePanel extends JPanel implements GameObserver {
 
         // aggiorno
         // infopanel
-        lblTurnInfo.setText("TURNO " + turn + "/" + Constants.MAX_TURNS);
+        lblTurnInfo.setText("TURNO " + turn + "/" + game.getTurnManager().getMaxTurns()); // in caso esca la location Limbo
         lblPlayerName.setText(name.toUpperCase());
         lblEnergyInfo.setText("ENERGIA: " + energy);
         // boardpanel
