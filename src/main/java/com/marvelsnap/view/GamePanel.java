@@ -78,6 +78,9 @@ public class GamePanel extends JPanel implements GameObserver {
         if (boardPanel != null) {
             boardPanel.setController(controller);
         }
+        if (handPanel != null) {
+            handPanel.setController(controller);
+        }
     }
 
     /**
@@ -159,7 +162,7 @@ public class GamePanel extends JPanel implements GameObserver {
             // Mostra SOLO la mano del giocatore corrente (aggiungo if per debug per evitare
             // nullpointer)
             if (currentPlayer != null && currentPlayer.getHand() != null) {
-                handPanel.setHand(currentPlayer.getHand(), this.controller);
+                handPanel.setHand(currentPlayer.getHand());
             }
         }
 
