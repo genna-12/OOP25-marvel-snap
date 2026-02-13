@@ -97,7 +97,6 @@ public class Game {
      * If only one player finished his turn, it switches to the other player.
      */
     public void endTurn() {
-
         this.turnManager.registerMove(this.turnManager.getCurrentPlayerIndex());
         /* Both players finished the turn */
         if (this.turnManager.isTurnCycleComplete()) {
@@ -105,27 +104,27 @@ public class Game {
 
             this.revealPhase();
 
-            this.turnManager.nextTurn();
-
-            for (final Player player : this.players) {
-                player.drawCard();
-                player.resetEnergy(this.turnManager.getEnergyForTurn()); /* Reset Energy for next turn */
-            }
-
-            /*Second and third location revelation */
-            if(this.turnManager.getCurrentTurn() == 2) {
-                this.locations.get(1).revealLocation(this);
-            } else if(this.turnManager.getCurrentTurn() == 3) {
-                this.locations.get(2).revealLocation(this);
-            }
-
-            /* Check endgame */
-            if (this.turnManager.getCurrentTurn() > this.turnManager.getMaxTurns()) {
+            /*Check endGame before going to nextTurn */
+            if(this.turnManager.getCurrentTurn() >= this.turnManager.getMaxTurns()) {
                 final Player winner = this.checkWinCondition();
-                for (final GameObserver obs : this.observers) {
+                for(final GameObserver obs : this.observers) {
                     obs.onGameOver(winner != null ? winner.getName() : "Pareggio");
                 }
                 return;
+            } else {
+                this.turnManager.nextTurn();
+                
+                for(final Player player : this.players) {
+                    player.drawCard();
+                    player.resetEnergy(this.turnManager.getEnergyForTurn()); /*Reset energy for the next turn */
+                }
+
+                /*Second and third location revelation */
+                if(this.turnManager.getCurrentTurn() == 2) {
+                    this.locations.get(1).revealLocation(this);
+                } else if(this.turnManager.getCurrentTurn() == 3) {
+                    this.locations.get(2).revealLocation(this);
+                }
             }
         } else {
             this.waitingForSwap = true;
@@ -143,7 +142,7 @@ public class Game {
     private void revealPhase() {
         for(final Location loc : this.locations) {
             /*Let's reveal the card played by player 1 */
-            for(Card c : loc.getCards(0)) {
+            for(final Card c : loc.getCards(0)) {
                 if(!c.isRevealed()) {
                     c.setRevealed(true);
                     c.onReveal(this, loc);
@@ -151,7 +150,7 @@ public class Game {
             }
 
             /*Let's reveal the card played by player 2 */
-            for(Card c : loc.getCards(1)) {
+            for(final Card c : loc.getCards(1)) {
                 if(!c.isRevealed()) {
                     c.setRevealed(true);
                     c.onReveal(this, loc);

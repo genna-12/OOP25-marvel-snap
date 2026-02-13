@@ -14,6 +14,7 @@ public class GameController implements GameObserver {
     private final GamePanel view;
     private InputState inputState;
     private Card selectedCard;
+    private String winner; /*It is necessary to show the board before showing the winner */
 
     /**
      * Class constructor.
@@ -93,12 +94,16 @@ public class GameController implements GameObserver {
      */
     public void onIntermissionReadyClicked() {
         /* Changes the view for the next Player */
-        if (this.inputState == InputState.WAITING_FOR_SWAP) {
-            this.inputState = InputState.IDLE;
-            this.game.setWaitingForSwap(false);
-
+        if (this.inputState == InputState.WAITING_FOR_SWAP || this.inputState == InputState.GAME_OVER) {
             this.view.showBoard();
             this.view.updateView(this.game);
+
+            if(this.winner != null) {
+                this.view.onGameOver(winner);;
+            } else {
+                this.inputState = InputState.IDLE;
+                this.game.setWaitingForSwap(false);
+            }
         }
     }
 
@@ -138,7 +143,7 @@ public class GameController implements GameObserver {
      */
     @Override
     public void onGameOver(final String winnerName) {
+        this.winner = winnerName;
         this.inputState = InputState.GAME_OVER;
-        this.view.onGameOver(winnerName);
     }
 }

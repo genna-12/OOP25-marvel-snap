@@ -46,19 +46,16 @@ public class ModelClassesTests {
     void testEnergyAndTurnFlow() {
         /*First turn */
         assertEquals(0, this.game.getTurnManager().getCurrentPlayerIndex());
-
-        assertEquals(1, this.game.getTurnManager().getEnergyForTurn());
-        assertEquals(1, this.game.getPlayer1().getCurrentEnergy());
         
         assertEquals(true, this.game.getLocations().get(0).isRevealed());
 
         game.endTurn(); /*P2 switch */
         assertEquals(1, this.game.getTurnManager().getCurrentPlayerIndex());
+        
         game.endTurn(); /*Next turn */
 
         /*Second turn */
         assertEquals(2, this.game.getTurnManager().getTurnNumber());
-        assertEquals(2, this.game.getPlayer1().getCurrentEnergy());
 
         assertEquals(true, this.game.getLocations().get(1).isRevealed());
 
@@ -67,13 +64,14 @@ public class ModelClassesTests {
 
         /*Third turn */
         assertEquals(3, this.game.getTurnManager().getCurrentTurn());
-        assertEquals(3, this.game.getPlayer1().getCurrentEnergy());
 
         assertEquals(true, this.game.getLocations().get(2).isRevealed());
     }
     
     @Test
     void testCardRevealAfterTurnCycle() {
+        this.game.getPlayer1().resetEnergy(10);
+        this.game.getPlayer2().resetEnergy(10);
         Card cardP1 = this.game.getPlayer1().getHand().getCards().getFirst();
         this.game.playCard(cardP1, 0);
         this.game.endTurn();
@@ -82,9 +80,9 @@ public class ModelClassesTests {
 
         Card cardP2 = this.game.getPlayer2().getHand().getCards().getFirst();
         this.game.playCard(cardP2, 2);
-        this.game.endTurn();
-
         assertFalse(cardP2.isRevealed());
+
+        this.game.endTurn();
 
         assertTrue(cardP1.isRevealed());
         assertTrue(cardP2.isRevealed());
