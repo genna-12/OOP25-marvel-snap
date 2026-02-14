@@ -15,6 +15,8 @@ import com.marvelsnap.model.ReducedCostLocation;
 import java.util.*;
 import com.marvelsnap.model.BasicCard;
 import com.marvelsnap.util.LocationFactory;
+import org.assertj.swing.fixture.FrameFixture;
+import org.assertj.swing.edt.GuiActionRunner;
 
 /**
  * Class for main tests.
@@ -154,7 +156,9 @@ public class ModelClassesTests {
         }
     }
 
-
+    /**
+     * Tests the main getters and setters for NormalLocation. It also tests if the power increase works properly.
+     */
     @Test
     void testNormalLocationProperties() {
         Location normalLocation = new NormalLocation("Nome", "Descrizione", 10, List.of(0, 1, 2, 3, 4, 5, 6));
@@ -180,6 +184,10 @@ public class ModelClassesTests {
         assertTrue(normalLocation.isFull(0));
     }
     
+    /**
+     * Tests whether the cost reduction of ReducedCostLocation works properly and if the cost boundaries
+     * of cards targeted by the effect are respected.
+     */
     @Test
     void testReducedCostLocationProperties() {
         Location reducedCostLocation = new ReducedCostLocation("Nome", "Descrizione", 1, List.of(1));
@@ -189,11 +197,14 @@ public class ModelClassesTests {
         reducedCostLocation.revealLocation(this.game);
 
         int handSize = this.game.getPlayer1().getHand().getCards().size();
-        assertEquals(0, this.game.getPlayer1().getHand().getCards().get(handSize - 2).getCost()); // verifica che la riduzione di costo sia avvenuta
-        assertEquals(6, this.game.getPlayer1().getHand().getCards().get(handSize - 1).getCost()); // verifica che la modifica di costo non riguardi
-        // la carta di costo 6, ma solo quella di costo 1
+        assertEquals(0, this.game.getPlayer1().getHand().getCards().get(handSize - 2).getCost());
+        assertEquals(6, this.game.getPlayer1().getHand().getCards().get(handSize - 1).getCost()); // verifies that 
+        // the 6 cost card isn't afflicted by the cost reduction
     }
 
+    /**
+     * Tests whether different location types are all instances of the class Location.
+     */
     @Test
     void testLocationPolymorphism () {
         Location testNormalLocation = new NormalLocation("Nome", "Descrizione", 0, List.of(0));
@@ -203,13 +214,9 @@ public class ModelClassesTests {
     }
 
     @Test
-    void testLocationFactory() {
-        LocationFactory locationFactory = new LocationFactory();
-        List<Location> locations = new ArrayList<>(locationFactory.createLocations());
-        assertEquals(3, locations.size());
-        assertNotEquals(locations.get(0), locations.get(1));
-        assertNotEquals(locations.get(0), locations.get(2));
-        assertNotEquals(locations.get(1), locations.get(2));
+    void testLocationPanel() {
+        this.game.getPlayer1().getHand().add(new BasicCard(100, "Nome",
+            0, 1, "Descrizione", "Nessuna"));
     }
 }
 

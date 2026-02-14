@@ -18,9 +18,11 @@ public class HandPanel extends JPanel {
     }
 
     public void setHand(Hand hand, GameController controller) {
+        
         this.removeAll();
         if (hand != null && hand.getCards() != null) {
             for (Card card : hand.getCards()) {
+                this.setName("cardPanel" + card.getId());
                 CardPanel cp = new CardPanel();
                 cp.setCard(card);
                 // questo è il collegamento di cui parlavo, quando clicco su una carta del mio hand, chiamo il metodo onCardClicked del controller

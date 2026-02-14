@@ -33,6 +33,7 @@ public class CardPanel extends JPanel {
     }
 
     public void setCard(Card c) {
+        this.setName("CardPanel" + c.getId());
         this.card = c;
         this.removeAll();
         JPanel header = new JPanel(new BorderLayout());

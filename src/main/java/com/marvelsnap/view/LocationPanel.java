@@ -10,6 +10,9 @@ import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
 
+/**
+ * The area of the board where cards are placed by each player and where locations and their effects are shown.
+ */
 public class LocationPanel extends JPanel {
 
     private Location location;
@@ -30,11 +33,12 @@ public class LocationPanel extends JPanel {
      */
     public LocationPanel(int locIndex) {
         this.locationIndex = locIndex;
+        this.setName("locationPanel" + locIndex);
         this.setLayout(new GridLayout(3, 1));
         this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
 
         this.p1CardsArea = new JPanel(new GridLayout(2, 2));
-        this.p1CardsArea.setBackground(new Color(40, 40, 40)); // l ho messo grigio scuro che mi sembra piu carino
+        this.p1CardsArea.setBackground(new Color(40, 40, 40));
         this.p1CardsArea.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), "Player 1"));
         this.p1Cells = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -65,7 +69,7 @@ public class LocationPanel extends JPanel {
 
         this.p1PowerLabel = new JLabel("0");
         this.p1PowerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        this.p1PowerLabel.setForeground(Color.CYAN); // cyan è il nome ricco dell'azzurro
+        this.p1PowerLabel.setForeground(Color.CYAN);
         this.p1PowerLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
         this.p2PowerLabel = new JLabel("0");
@@ -98,7 +102,7 @@ public class LocationPanel extends JPanel {
 
     /**
      * Updates the labels and the panels with new game informations. Informations are shown differently
-     * according to the player whose currently playing, in order to hide cards that are yet to reveal
+     * according to the player who is currently playing, in order to hide cards that are yet to reveal
      * to the opposing player. 
      * 
      * @param viewerIdx the index of the current player.
@@ -154,6 +158,9 @@ public class LocationPanel extends JPanel {
         this.controller = controller;
     }
 
+    /**
+     * Constructs a MouseAdapter in order to involve the controller after user interaction.
+     */
     private void propagateMouseListener() {
         MouseAdapter clicker = new MouseAdapter() {
             @Override
@@ -168,13 +175,21 @@ public class LocationPanel extends JPanel {
         this.infoArea.addMouseListener(clicker);
     }
 
-    // reset di location panel serviva sempre al mio GamePanel P2
+    /**
+     * Resets the panel to be ready for a new game.
+     */
     public void reset() {
         infoLabel.setText("Location");
-
-        p2CardsArea.removeAll();
-        
         revalidate();
         repaint();
+    }
+
+    public List<JPanel> getPlayerCells(int pIdx) {
+        if (pIdx == 0) {
+            return this.p1Cells;
+        }
+        else {
+            return this.p2Cells;
+        }
     }
 }

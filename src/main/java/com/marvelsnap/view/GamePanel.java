@@ -279,4 +279,12 @@ public class GamePanel extends JPanel implements GameObserver {
         revalidate();
         repaint();
     }
+
+    public BoardPanel getBoardPanel() {
+        return this.boardPanel;
+    }
+
+    public HandPanel getHandPanel() {
+        return this.handPanel;
+    }
 }
