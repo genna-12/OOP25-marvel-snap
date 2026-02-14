@@ -3,6 +3,7 @@ package com.marvelsnap.view;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import java.awt.BorderLayout;
@@ -51,24 +52,40 @@ public class CardPanel extends JPanel {
     public void setCard(Card c) {
         this.card = c;
         this.removeAll();
+        JPanel header = new JPanel(new BorderLayout());
+        header.setOpaque(false);
 
-        JLabel cardNameLabel = new JLabel(card.getName()); 
-        cardNameLabel.setForeground(Color.BLACK);
-        cardNameLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        cardNameLabel.setHorizontalAlignment(JLabel.CENTER); 
+        JLabel costLbl = createStatLabel(" " + c.getCost() + " ", new Color(50, 100, 255));
+        JLabel powerLbl = createStatLabel(" " + c.getPower() + " ", new Color(255, 140, 0));
+        header.add(costLbl, BorderLayout.WEST);
+        header.add(powerLbl, BorderLayout.EAST);
+        this.add(header, BorderLayout.NORTH);
 
-        JLabel cardCostLabel = new JLabel("COST: " + card.getCost()); 
-        cardCostLabel.setHorizontalAlignment(JLabel.CENTER);
+        JLabel nameLbl = new JLabel("<html><center>" + c.getName() + "</center></html>");
+        nameLbl.setHorizontalAlignment(SwingConstants.CENTER);
+        nameLbl.setFont(new Font("Arial", Font.BOLD, 12));
+        nameLbl.setForeground(Color.BLACK);
+        this.add(nameLbl, BorderLayout.CENTER);
 
-        JLabel cardPowerLabel = new JLabel("POWER: " + card.getPower()); 
-        cardPowerLabel.setHorizontalAlignment(JLabel.CENTER); 
-        
-        this.add(cardNameLabel, BorderLayout.CENTER);
-        this.add(cardCostLabel, BorderLayout.NORTH);
-        this.add(cardPowerLabel, BorderLayout.SOUTH);
-        
-        this.revalidate();
-        this.repaint();
+        this.setToolTipText("<html><b>" + c.getName() + "</b><br>Descrizione: " + c.getDescription() + "</b><br>Effetto: " + c.getAbility() + "</html>");
+    }
+
+
+    /**
+     * Creates a styled label for card's cost and power.
+     * 
+     * @param text 
+     * @param bgColor 
+     * @return a JLabel.
+     */
+    private JLabel createStatLabel(String text, Color bgColor) {
+        JLabel lbl = new JLabel(text);
+        lbl.setOpaque(true);
+        lbl.setBackground(bgColor);
+        lbl.setForeground(Color.WHITE);
+        lbl.setFont(new Font("Arial", Font.BOLD, 14));
+        lbl.setHorizontalAlignment(SwingConstants.CENTER);
+        return lbl;
     }
 
     /**
