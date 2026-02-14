@@ -36,7 +36,7 @@ class HandPanelTest {
      */
     @Test
     void testNormalSetHand() {
-        handPanel.setHand(hand, null);
+        handPanel.setHand(hand);
 
         int componentCount = handPanel.getComponentCount();
         assertEquals(3, componentCount);
@@ -47,11 +47,11 @@ class HandPanelTest {
      */
     @Test
     void testClearOldCards() {
-        handPanel.setHand(hand, null);
+        handPanel.setHand(hand);
         
         Hand newHand = new Hand();
         newHand.add(new BasicCard(3, "Hulk", 6, 12, "HULK SPACCA!", "Nessuna"));
-        handPanel.setHand(newHand, null);
+        handPanel.setHand(newHand);
     
         assertEquals(1, handPanel.getComponentCount());
     }
@@ -61,7 +61,7 @@ class HandPanelTest {
      */
     @Test
     void testSetHandWithNull() {
-        handPanel.setHand(null, null);
+        handPanel.setHand(null);
         
         assertEquals(0, handPanel.getComponentCount());
     }
@@ -71,7 +71,7 @@ class HandPanelTest {
      */
     @Test
     void testClickInHand() {
-        handPanel.setHand(hand, null);
+        handPanel.setHand(hand);
         
         CardPanel cp = (CardPanel) handPanel.getComponent(0);
         

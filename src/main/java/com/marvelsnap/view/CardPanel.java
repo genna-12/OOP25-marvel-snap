@@ -92,6 +92,7 @@ public class CardPanel extends JPanel {
      * Toggles the selection state of the card and updates its visual borders and colors.
      */
     public void toggleSelection() {
+        System.out.println("toggled selection");
         isSelected = !isSelected;
         if (isSelected) {
             this.setBackground(BG_SELECTED);
