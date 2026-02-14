@@ -97,6 +97,7 @@ public class GamePanel extends JPanel implements GameObserver {
 
         // Sinistra
         lblTurnInfo = new JLabel("TURNO: --/" + Constants.MAX_TURNS);
+        lblTurnInfo.setName("labelTurno"); // per i test
         lblTurnInfo.setForeground(Color.WHITE);
         lblTurnInfo.setFont(new Font("Arial", Font.BOLD, 16));
 

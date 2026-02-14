@@ -115,4 +115,8 @@ public class MainController {
 
         mainFrame.showScreen("GAME");
     }
+
+    public MainFrame getMainFrame() {
+        return mainFrame;
+    }
 }
