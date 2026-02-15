@@ -8,5 +8,4 @@ bin/
 .DS_Store
 out/
 .vscode/
-*.jar
 !report.pdf
