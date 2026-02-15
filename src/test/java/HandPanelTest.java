@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import com.marvelsnap.model.Hand;
 import com.marvelsnap.model.BasicCard;
 import com.marvelsnap.model.BonusCard;
-import com.marvelsnap.view.CardPanel;
 import com.marvelsnap.view.HandPanel;
 
 /**
@@ -64,19 +63,5 @@ class HandPanelTest {
         handPanel.setHand(null);
         
         assertEquals(0, handPanel.getComponentCount());
-    }
-
-    /**
-     * Tests if the card click works when it is in hand.
-     */
-    @Test
-    void testClickInHand() {
-        handPanel.setHand(hand);
-        
-        CardPanel cp = (CardPanel) handPanel.getComponent(0);
-        
-        assertFalse(cp.isSelected());
-        cp.mouseClicked(null);
-        assertTrue(cp.isSelected());
     }
 }

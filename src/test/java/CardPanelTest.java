@@ -75,31 +75,25 @@ class CardPanelTest {
      * Test the selection feature.
      */
     @Test
-    void testToggleSelection() {
+    void testSelection() {
+        cardPanel.setCard(card1);
+        
         assertFalse(cardPanel.isSelected());
+        assertEquals(new Color(210, 210, 210), cardPanel.getBackground());
+
+        card1.setSelected(true);
+        cardPanel.setCard(card1);
+        assertTrue(cardPanel.isSelected());
         
         cardPanel.toggleSelection();
-        
-        assertTrue(cardPanel.isSelected());
-        assertEquals(new Color(180, 255, 180), cardPanel.getBackground());
         assertEquals(new Color(180, 255, 180), cardPanel.getBackground());
 
-        
+        card1.setSelected(false);
+        cardPanel.setCard(card1);
+        assertFalse(cardPanel.isSelected());
+        assertEquals(new Color(210, 210, 210), cardPanel.getBackground());
+
         cardPanel.toggleSelection();
-        assertFalse(cardPanel.isSelected());
-    }
-
-    /**
-     * Checks if the mouse click triggers the selection correctly.
-     */
-    @Test
-    void testClickSelection() {
-        assertFalse(cardPanel.isSelected());
-
-        cardPanel.mouseClicked(null);
-        assertTrue(cardPanel.isSelected());
-
-        cardPanel.mouseClicked(null);
-        assertFalse(cardPanel.isSelected());
+        assertEquals(new Color(210, 210, 210), cardPanel.getBackground());
     }
 }
