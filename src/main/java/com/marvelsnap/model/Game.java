@@ -142,16 +142,18 @@ public class Game {
      */
     private void revealPhase() {
         for(final Location loc : this.locations) {
+            this.turnManager.switchPlayer();
             /*Let's reveal the card played by player 1 */
-            for(Card c : loc.getCards(0)) {
+            for(final Card c : loc.getCards(this.turnManager.getCurrentPlayerIndex())) {
                 if(!c.isRevealed()) {
                     c.setRevealed(true);
                     c.onReveal(this, loc);
                 }
             }
 
+            this.turnManager.switchPlayer();
             /*Let's reveal the card played by player 2 */
-            for(final Card c : loc.getCards(1)) {
+            for(final Card c : loc.getCards(this.turnManager.getCurrentPlayerIndex())) {
                 if(!c.isRevealed()) {
                     c.setRevealed(true);
                     c.onReveal(this, loc);
