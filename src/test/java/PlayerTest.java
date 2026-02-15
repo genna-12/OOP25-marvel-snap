@@ -9,6 +9,7 @@ import com.marvelsnap.model.Player;
 import com.marvelsnap.model.BasicCard;
 import com.marvelsnap.model.BonusCard;
 import com.marvelsnap.model.Card;
+import com.marvelsnap.model.DebuffCard;
 
 
 /**
@@ -30,7 +31,14 @@ class PlayerTest {
         cardList.add(new BonusCard(2, "Ant-Man", 1, 1, "Non dirgli che è troppo piccolo",
                         "On Reveal: +3 Forza se questa location ha già 3 carte."));
         cardList.add(new BasicCard(3, "Hulk", 6, 12, "HULK SPACCA!", "Nessuna"));
-        
+        cardList.add(new BonusCard(4, "Black Panther", 5, 4, "Wakanda Forever!",
+                        "On Reveal: Raddoppia la forza di questa carta."));
+        cardList.add(new BonusCard(5, "Captain America", 3, 3, "Il Capitano.",
+                        "On Reveal: +1 Forza alle altre tue carte qui."));
+        cardList.add(new BasicCard(6, "Thor", 3, 4, "Una parola: DAMN", "Nessuna"));
+        cardList.add(new BasicCard(7, "Thanos", 6, 10, "L'ineluttabile.", "Nessuna"));
+        cardList.add(new DebuffCard(8, "Iceman", 1, 2, "Ghiaccio","On Reveal: -1 Forza a una carta nemica."));
+
         player = new Player("p1", cardList);
     }
 
@@ -51,6 +59,14 @@ class PlayerTest {
     void testDrawCard() {
         player.drawCard();
         assertEquals(1, player.getHand().getCards().size());
+
+        for (int i = 0; i < 6; i++) {
+            player.drawCard();
+        }
+        assertEquals(7, player.getHand().getCards().size());
+
+        player.drawCard();
+        assertEquals(7, player.getHand().getCards().size());
     }
 
     /**
