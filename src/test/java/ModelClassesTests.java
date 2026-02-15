@@ -153,6 +153,7 @@ public class ModelClassesTests {
         }
     }
 
+<<<<<<< HEAD
 
     @Test
     void testNormalLocationProperties() {
@@ -198,6 +199,9 @@ public class ModelClassesTests {
         List<Location> locations = new ArrayList<>();
         
     }
+=======
+    
+>>>>>>> 5b4a2bc7aa59129f8b2c52b7cd357c5505ec2c96
 }
 
 
