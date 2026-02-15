@@ -1,4 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.awt.Dimension;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.marvelsnap.util.DeckType;
@@ -44,13 +47,19 @@ public class BoardPanelTest {
 
             JFrame frame = new JFrame();
             frame.add(testGamePanel);
+            frame.setPreferredSize(new Dimension(1280, 720));
             frame.pack();
             return frame;
         });
 
         this.testWindow = new FrameFixture(this.testMainFrame);
         this.testWindow.show();
-        this.testWindow.maximize();
+        this.testMainFrame.setSize(1280, 720);
+        GuiActionRunner.execute(() -> {
+        testMainFrame.toFront();
+        testMainFrame.requestFocus();
+        });
+        Pause.pause(500);
         this.testWindow.robot().waitForIdle();
     }
 

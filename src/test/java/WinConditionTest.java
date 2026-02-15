@@ -39,8 +39,12 @@ public class WinConditionTest {
     @Test
     void testNormalWin() {
         /*P1 wins */
-        this.locs.get(0).addCard(0, new BasicCard(0, "c1", 1, 10, "", ""));
-        this.locs.get(1).addCard(0, new BasicCard(1, "c2", 1, 7, "", ""));
+        final BasicCard c1 = new BasicCard(0, "c1", 1, 10, "", "");
+        c1.setRevealed(true);
+        this.locs.get(0).addCard(0, c1);
+        final BasicCard c2 = new BasicCard(1, "c2", 1, 7, "", "");
+        c2.setRevealed(true);
+        this.locs.get(1).addCard(0, c2);
 
         final Player winner = WinCondition.determineWinner(locs, p1, p2);
         assertEquals(p1, winner);
@@ -52,11 +56,15 @@ public class WinConditionTest {
     @Test
     void testTieBreaker() {
         /*Tie on first location */
-        this.locs.get(0).addCard(0, new BasicCard(0, "c1", 1, 1, "", ""));
-        this.locs.get(0).addCard(1, new BasicCard(1, "c2", 1, 1, "", ""));
+        final BasicCard c1 = new BasicCard(0, "c1", 1, 1, "", "");
+        c1.setRevealed(true);
+        this.locs.get(0).addCard(0, c1);
+        final BasicCard c2 = new BasicCard(1, "c2", 1, 1, "", "");
+        this.locs.get(0).addCard(1, c2);
 
         /*P1 wins second location */
-        this.locs.get(1).addCard(0, new BasicCard(2, "c3", 1, 10, "", ""));
+        final BasicCard c3 = new BasicCard(1, "c2", 1, 7, "", "");
+        this.locs.get(1).addCard(0, c3);
 
         /*P1 wins because he has a greater totalPower */
         final Player winner = WinCondition.determineWinner(locs, p1, p2);
