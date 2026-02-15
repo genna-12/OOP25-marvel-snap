@@ -26,6 +26,9 @@ public class ReducedCostLocation extends Location {
         this.targetedCosts = targetedCosts;
     }
 
+    /**
+     * Applies the effect of the location.
+     */
     @Override
     public void applyEffect(Game game) {
         for (Card c : game.getPlayer1().getHand().getCards()) {
