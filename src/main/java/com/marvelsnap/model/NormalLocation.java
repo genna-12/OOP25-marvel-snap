@@ -25,6 +25,9 @@ public class NormalLocation extends Location {
         this.targetedCosts = targetedCosts;
     }
 
+    /**
+     * Applies the effect of the location.
+     */
     @Override
     public void applyEffect(Game game) {
         for (Card c : this.cardsPlayer1) {

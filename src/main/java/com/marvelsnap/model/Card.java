@@ -141,7 +141,7 @@ public abstract class Card {
         if (o == null || getClass() != o.getClass())
             return false;
         Card card = (Card) o;
-        // Due carte sono uguali se hanno lo stesso nome (e magari costo/potere)
+        /*Two cards are equal if they share the same name (or cost or power) */
         return name.equals(card.name);
     }
 }

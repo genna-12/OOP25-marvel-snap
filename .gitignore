@@ -9,4 +9,4 @@ bin/
 out/
 .vscode/
 *.jar
-!relazione.pdf
+!report.pdf
