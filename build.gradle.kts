@@ -34,6 +34,14 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
+tasks.test {
+    systemProperty("java.awt.headless", "false")
+
+    jvmArgs("-Djava.awt.headless=false")
+    
+    outputs.upToDateWhen { false }
+}
+
 tasks.jar {
     manifest {
         attributes["Main-Class"] = "com.marvelsnap.main.Main"
