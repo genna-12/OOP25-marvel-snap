@@ -144,7 +144,7 @@ public class Game {
         for(final Location loc : this.locations) {
             this.turnManager.switchPlayer();
             /*Let's reveal the card played by player 1 */
-            for(Card c : loc.getCards(this.turnManager.getCurrentPlayerIndex())) {
+            for(final Card c : loc.getCards(this.turnManager.getCurrentPlayerIndex())) {
                 if(!c.isRevealed()) {
                     c.setRevealed(true);
                     c.onReveal(this, loc);
