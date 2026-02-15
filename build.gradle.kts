@@ -38,6 +38,10 @@ tasks.jar {
     manifest {
         attributes["Main-Class"] = "com.marvelsnap.main.Main"
     }
+
+    val runtimeClasspath = configurations.runtimeClasspath.get()
+    from(runtimeClasspath.map { if (it.isDirectory) it else zipTree(it) })
+    
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
 }
