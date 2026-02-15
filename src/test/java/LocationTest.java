@@ -1,10 +1,8 @@
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.marvelsnap.util.DeckType;
 import com.marvelsnap.view.GamePanel;
-import com.marvelsnap.view.IntermissionPanel;
 import com.marvelsnap.controller.GameController;
 import com.marvelsnap.model.Card;
 import com.marvelsnap.model.Game;
@@ -16,14 +14,13 @@ import com.marvelsnap.model.BasicCard;
 
 public class LocationTest {
     private Game game;
-    private GameController controller;
-    private TestGamePanel testView;
+    private GamePanel testView;
 
     @BeforeEach
     void setUp() {
         this.game = new Game();
-        this.testView = new TestGamePanel();
-        this.controller = new GameController(this.game, this.testView);
+        this.testView = new GamePanel();
+        new GameController(this.game, this.testView); // keeping a reference is unnecessary for this test.
 
         this.game.startGame("Player1", DeckType.AVENGERS, "Player2", DeckType.VILLAINS);
     }
@@ -83,41 +80,5 @@ public class LocationTest {
         assertTrue(testNormalLocation instanceof Location);
         Location testReducedLocation = new ReducedCostLocation("Nome", "Descrizione", 0, List.of(0));
         assertTrue(testReducedLocation instanceof Location);
-    }
-    
-    /**
-     * Utility class for tests. It simulates a GamePanel.
-     */
-    private static class TestGamePanel extends GamePanel {
-        public boolean intermissionShown = false;
-        public boolean boardShown = false;
-        public boolean updateCalledAfterReady = false;
-        private IntermissionPanel testIntermission = new IntermissionPanel();
-
-        @Override
-        public void showIntermission() {
-            this.intermissionShown = true;
-        }
-
-        @Override
-        public void showBoard() {
-            this.boardShown = true;
-        }
-
-        @Override
-        public void updateView(Game game) {
-            if(this.boardShown) {
-                this.updateCalledAfterReady = true;
-            }
-        }
-
-        public IntermissionPanel getIntermissionPanel() {
-            return this.testIntermission;
-        }
-
-        @Override
-        public int showEndGame(String winnerName) {
-            return 0; 
-        }
     }
 }

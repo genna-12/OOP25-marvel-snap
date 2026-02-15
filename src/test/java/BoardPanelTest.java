@@ -21,7 +21,6 @@ public class BoardPanelTest {
 
     private Game testGame;
     private GamePanel testGamePanel;
-    private GameController testController;
     private JFrame testMainFrame;
     private FrameFixture testWindow;
     
@@ -33,23 +32,20 @@ public class BoardPanelTest {
     public void setUp() {
         this.testGame = new Game();
 
-        this.testMainFrame = GuiActionRunner.execute(new java.util.concurrent.Callable<JFrame>() {
-            @Override
-            public JFrame call() {
-                testGame.startGame("Player1", DeckType.AVENGERS, "Player2", DeckType.VILLAINS);
+        this.testMainFrame = GuiActionRunner.execute(() -> {
+            testGame.startGame("Player1", DeckType.AVENGERS, "Player2", DeckType.VILLAINS);
                 
-                Card testCard = new BasicCard(100, "Test", 0, 1, "Descrizione", "Nessuna");
-                testGame.getPlayer1().getHand().add(testCard);
+            Card testCard = new BasicCard(100, "Test", 0, 1, "Descrizione", "Nessuna");
+            testGame.getPlayer1().getHand().add(testCard);
 
-                testGamePanel = new GamePanel();
-                testController = new GameController(testGame, testGamePanel);
-                testGamePanel.getHandPanel().setHand(testGame.getPlayer1().getHand());
+            testGamePanel = new GamePanel();
+            new GameController(testGame, testGamePanel); // keeping a reference is unnecessary for this test.
+            testGamePanel.getHandPanel().setHand(testGame.getPlayer1().getHand());
 
-                JFrame frame = new JFrame();
-                frame.add(testGamePanel);
-                frame.pack();
-                return frame;
-            }
+            JFrame frame = new JFrame();
+            frame.add(testGamePanel);
+            frame.pack();
+            return frame;
         });
 
         this.testWindow = new FrameFixture(this.testMainFrame);
